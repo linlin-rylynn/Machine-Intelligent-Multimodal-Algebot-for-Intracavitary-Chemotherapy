@@ -263,7 +263,7 @@ if __name__ == "__main__":
                         line = ','.join(map(str, target_position)) + '\n'
                         f.write(line)
 
-                print(f"数组已保存到 {fname} 文件中")
+                print(f"The array has been saved to the file {fname}")
 
         for i, j in enumerate(route[1::]):
             gray_img[route_[i] % length][int(route_[i] / length)] = 255
