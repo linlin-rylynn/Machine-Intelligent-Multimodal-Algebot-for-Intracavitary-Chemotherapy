@@ -15,9 +15,9 @@ import openpyxl
 import math
 from RMS.CCClient import CCClient
 
-# =================================
-# GPU Configuration for TensorFlow
-# =================================
+# ============================ #
+#    GPU Configuration (TF)   #
+# ============================ #
 gpus = tf.config.experimental.list_physical_devices(device_type='GPU')
 for gpu in gpus:
     tf.config.experimental.set_memory_growth(gpu, True)
