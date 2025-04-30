@@ -2,8 +2,8 @@ import numpy as np
 from PIL import Image
 
 #---------------------------------------------------------#
-#   将图像转换成RGB图像，防止灰度图在预测时报错。
-#   代码仅仅支持RGB图像的预测，所有其它类型的图像都会转化成RGB
+#   Convert image to RGB format to avoid errors when predicting grayscale images.
+#   This code only supports RGB images. All other types will be converted to RGB.
 #---------------------------------------------------------#
 def cvtColor(image):
     if len(np.shape(image)) == 3 and np.shape(image)[-2] == 3:
@@ -13,7 +13,7 @@ def cvtColor(image):
         return image 
 
 #---------------------------------------------------#
-#   对输入图像进行resize
+#   Resize the input image
 #---------------------------------------------------#
 def resize_image(image, size):
     iw, ih  = image.size
@@ -151,7 +151,7 @@ def net_flops(model, table=False, print_result=True):
                     flops += temp_flops
                 
             #--------------------------------------#
-            #   全连接层
+            #   Fully connected layer
             #--------------------------------------#
             elif ('Dense' in str(l)):
                 for i in range(len(l._inbound_nodes)):
