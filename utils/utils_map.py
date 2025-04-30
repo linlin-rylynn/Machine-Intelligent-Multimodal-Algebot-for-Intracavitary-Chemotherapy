@@ -879,7 +879,7 @@ def get_coco_map(class_names, path):
         results_dr  = preprocess_dr(DR_PATH, class_names)
         json.dump(results_dr, f, indent=4)
         if len(results_dr) == 0:
-            print("未检测到任何目标。")
+            print("No targets detected.")
             return [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
     cocoGt      = COCO(GT_JSON_PATH)
