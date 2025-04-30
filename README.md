@@ -22,7 +22,7 @@ It supports two control configurations:
 
 ## System Requirements
 
-  ### Core Framework Requirements
+  ### Core Framework 
   - Python: 3.7+ 
   - TensorFlow: 2.4.0 
   - OpenCV: 4.2.0+ 
@@ -37,7 +37,7 @@ It supports two control configurations:
   - Pillow: 8.2.0
   - numpy: 1.21.6
   ### Control System Dependencies
-  - pygam: 2.6.1     
+  - pygame: 2.6.1     
   - pyserial: 3.5      
   - openpyxl: 3.1.3   
   - mss: 6.1.0
