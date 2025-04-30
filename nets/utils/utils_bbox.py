@@ -410,12 +410,12 @@ if __name__ == "__main__":
         # 3
         num_anchors = len(anchors)
         #------------------------------------------#
-        #   grid_shape指的是特征层的高和宽
+        #   grid_shape refers to the height and width of the feature map
         #   grid_shape [20, 20] 
         #------------------------------------------#
         grid_shape = np.shape(feats)[1:3]
         #--------------------------------------------------------------------#
-        #   获得各个特征点的坐标信息。生成的shape为(20, 20, num_anchors, 2)
+        #   Get the coordinates of each feature point. The resulting shape is (20, 20, num_anchors, 2)
         #   grid_x [20, 20, 3, 1]
         #   grid_y [20, 20, 3, 1]
         #   grid   [20, 20, 3, 2]
@@ -424,7 +424,7 @@ if __name__ == "__main__":
         grid_y  = np.tile(np.reshape(np.arange(0, stop=grid_shape[0]), [-1, 1, 1, 1]), [1, grid_shape[1], num_anchors, 1])
         grid    = np.concatenate([grid_x, grid_y], -1)
         #---------------------------------------------------------------#
-        #   将先验框进行拓展，生成的shape为(20, 20, num_anchors, 2)
+        #   Expand the anchors to match the grid, resulting shape (20, 20, num_anchors, 2)
         #   [1, 1, 3, 2]
         #   [20, 20, 3, 2]
         #---------------------------------------------------------------#
@@ -432,25 +432,28 @@ if __name__ == "__main__":
         anchors_tensor = np.tile(anchors_tensor, [grid_shape[0], grid_shape[1], 1, 1]) 
 
         #---------------------------------------------------#
-        #   将预测结果调整成(batch_size, 20, 20, 3, 85)
-        #   85可拆分成4 + 1 + 80
-        #   4代表的是中心宽高的调整参数
-        #   1代表的是框的置信度
-        #   80代表的是种类的置信度
+        #   Adjust the prediction results to shape (batch_size, 20, 20, 3, 85)
+        #   85 can be split into 4 + 1 + 80
+        #   4 represents the center, width, and height adjustment parameters
+        #   1 represents the object confidence
+        #   80 represents the class probabilities
         #   [batch_size, 20, 20, 3 * (5 + num_classes)]
         #   [batch_size, 20, 20, 3, 5 + num_classes]
         #---------------------------------------------------#
-        feats           = np.reshape(feats, [-1, grid_shape[0], grid_shape[1], num_anchors, num_classes + 5])
+        feats = np.reshape(feats, [-1, grid_shape[0], grid_shape[1], num_anchors, num_classes + 5])
 
         #------------------------------------------#
-        #   对先验框进行解码，并进行归一化
+        #   Decode the anchor boxes and normalize the values
         #------------------------------------------#
-        box_xy          = (sigmoid(feats[..., :2]) * 2 - 0.5 + grid)
-        box_wh          = (sigmoid(feats[..., 2:4]) * 2) ** 2 * anchors_tensor
+        box_xy = (sigmoid(feats[..., :2]) * 2 - 0.5 + grid)
+        box_wh = (sigmoid(feats[..., 2:4]) * 2) ** 2 * anchors_tensor
         #------------------------------------------#
-        #   获得预测框的置信度
+        #   Get the object confidence of the predicted boxes
         #------------------------------------------#
-        box_confidence  = sigmoid(feats[..., 4:5])
+        box_confidence = sigmoid(feats[..., 4:5])
+        #------------------------------------------#
+        #   Get the class probabilities for each predicted box
+        #------------------------------------------#
         box_class_probs = sigmoid(feats[..., 5:])
 
         box_wh          = box_wh / 32
