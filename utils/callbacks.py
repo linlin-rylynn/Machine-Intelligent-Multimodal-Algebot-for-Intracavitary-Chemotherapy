@@ -131,21 +131,20 @@ class EvalCallback(keras.callbacks.Callback):
     def get_map_txt(self, image_id, image, class_names, map_out_path):
         f = open(os.path.join(map_out_path, "detection-results/"+image_id+".txt"),"w") 
         #---------------------------------------------------------#
-        #   在这里将图像转换成RGB图像，防止灰度图在预测时报错。
+        #   Convert the image to RGB here to prevent grayscale images from reporting errors during prediction
         #---------------------------------------------------------#
         image       = cvtColor(image)
         #---------------------------------------------------------#
-        #   给图像增加灰条，实现不失真的resize
-        #   也可以直接resize进行识别
+        #   Add gray bars to the image to achieve distortion-free resizing, or directly resize for recognition
         #---------------------------------------------------------#
         image_data  = resize_image(image, (self.input_shape[1], self.input_shape[0]), self.letterbox_image)
         #---------------------------------------------------------#
-        #   添加上batch_size维度，并进行归一化
+        #   Add the batch_size dimension and normalize it
         #---------------------------------------------------------#
         image_data  = np.expand_dims(preprocess_input(np.array(image_data, dtype='float32')), 0)
 
         #---------------------------------------------------------#
-        #   将图像输入网络当中进行预测！
+        #  Feed the image into the network and make predictions!
         #---------------------------------------------------------#
         input_image_shape   = np.expand_dims(np.array([image.size[1], image.size[0]], dtype='float32'), 0)
         outputs             = self.get_pred(image_data, input_image_shape) 
@@ -185,20 +184,20 @@ class EvalCallback(keras.callbacks.Callback):
                 line        = annotation_line.split()
                 image_id    = os.path.basename(line[0]).split('.')[0]
                 #------------------------------#
-                #   读取图像并转换成RGB图像
+                #   Read the image and convert it into RGB image
                 #------------------------------#
                 image       = Image.open(line[0])
                 #------------------------------#
-                #   获得预测框
+                #   Get the prediction box
                 #------------------------------#
                 gt_boxes    = np.array([np.array(list(map(int,box.split(',')))) for box in line[1:]])
                 #------------------------------#
-                #   获得预测txt
+                #   Get prediction txt
                 #------------------------------#
                 self.get_map_txt(image_id, image, self.class_names, self.map_out_path)
                 
                 #------------------------------#
-                #   获得真实框txt
+                #   Get the real box txt
                 #------------------------------#
                 with open(os.path.join(self.map_out_path, "ground-truth/"+image_id+".txt"), "w") as new_f:
                     for box in gt_boxes:
