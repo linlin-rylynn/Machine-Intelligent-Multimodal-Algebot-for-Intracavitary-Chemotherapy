@@ -41,6 +41,12 @@ It supports two control configurations:
   - pyserial: 3.5      
   - openpyxl: 3.1.3   
   - mss: 6.1.0
+
+## Acknowledgment
+  tf_unet    [https://github.com/jakeret/tf_unet](https://github.com/jakeret/tf_unet).
+
+  Yolov5_tf   [https://github.com/jakeret/tf_unet](https://github.com/jakeret/tf_unet).
+
     
 
 
