@@ -4,11 +4,11 @@ from tensorflow.keras import backend as K
 
 
 #---------------------------------------------------#
-#   对box进行调整，使其符合真实图片的样子
+#  Adjust the box to match the real picture
 #---------------------------------------------------#
 def yolo_correct_boxes(box_xy, box_wh, input_shape, image_shape, letterbox_image):
     #-----------------------------------------------------------------#
-    #   把y轴放前面是因为方便预测框和图像的宽高进行相乘
+    #   The y-axis is placed in front because it is convenient to multiply the width and height of the prediction box and the image.
     #-----------------------------------------------------------------#
     box_yx = box_xy[..., ::-1]
     box_hw = box_wh[..., ::-1]
@@ -17,8 +17,8 @@ def yolo_correct_boxes(box_xy, box_wh, input_shape, image_shape, letterbox_image
 
     if letterbox_image:
         #-----------------------------------------------------------------#
-        #   这里求出来的offset是图像有效区域相对于图像左上角的偏移情况
-        #   new_shape指的是宽高缩放情况
+        #  offset is the offset of the image's effective area relative to the upper left corner of the image
+        #  new_shape refers to the width and height scaling
         #-----------------------------------------------------------------#
         new_shape = K.round(image_shape * K.min(input_shape/image_shape))
         offset  = (input_shape - new_shape)/2./input_shape
@@ -34,64 +34,64 @@ def yolo_correct_boxes(box_xy, box_wh, input_shape, image_shape, letterbox_image
     return boxes
 
 #---------------------------------------------------#
-#   将预测值的每个特征层调成真实值
+#   Adjust each feature layer of the predicted value to the true value
 #---------------------------------------------------#
 def get_anchors_and_decode(feats, anchors, num_classes, input_shape, calc_loss=False):
     num_anchors = len(anchors)
     #------------------------------------------#
-    #   grid_shape指的是特征层的高和宽
+    #   grid_shape refers to the height and width of the feature layer
     #------------------------------------------#
     grid_shape = K.shape(feats)[1:3]
     #--------------------------------------------------------------------#
-    #   获得各个特征点的坐标信息。生成的shape为(20, 20, num_anchors, 2)
+    #  Get the coordinate information of each feature point. The generated shape is (20, 20, num_anchors, 2)
     #--------------------------------------------------------------------#
     grid_x  = K.tile(K.reshape(K.arange(0, stop=grid_shape[1]), [1, -1, 1, 1]), [grid_shape[0], 1, num_anchors, 1])
     grid_y  = K.tile(K.reshape(K.arange(0, stop=grid_shape[0]), [-1, 1, 1, 1]), [1, grid_shape[1], num_anchors, 1])
     grid    = K.cast(K.concatenate([grid_x, grid_y]), K.dtype(feats))
     #---------------------------------------------------------------#
-    #   将先验框进行拓展，生成的shape为(20, 20, num_anchors, 2)
+    #   Expand the prior box and generate a shape of (20, 20, num_anchors, 2)
     #---------------------------------------------------------------#
     anchors_tensor = K.reshape(K.constant(anchors), [1, 1, num_anchors, 2])
     anchors_tensor = K.tile(anchors_tensor, [grid_shape[0], grid_shape[1], 1, 1])
 
     #---------------------------------------------------#
-    #   将预测结果调整成(batch_size, 20, 20, 3, 85)
-    #   85可拆分成4 + 1 + 80
-    #   4代表的是中心宽高的调整参数
-    #   1代表的是框的置信度
-    #   80代表的是种类的置信度
+    # Adjust the prediction result to (batch_size, 20, 20, 3, 85)
+    # 85 can be split into 4 + 1 + 80
+    # 4 represents the adjustment parameter of the center width and height
+    # 1 represents the confidence of the box
+    # 80 represents the confidence of the category
     #---------------------------------------------------#
     feats           = K.reshape(feats, [-1, grid_shape[0], grid_shape[1], num_anchors, num_classes + 5])
     #------------------------------------------#
-    #   对先验框进行解码，并进行归一化
+    #   Decode the prior frame and normalize it
     #------------------------------------------#
     box_xy          = (K.sigmoid(feats[..., :2]) * 2 - 0.5 + grid) / K.cast(grid_shape[..., ::-1], K.dtype(feats))
     box_wh          = (K.sigmoid(feats[..., 2:4]) * 2) ** 2 * anchors_tensor / K.cast(input_shape[::-1], K.dtype(feats))
     #------------------------------------------#
-    #   获得预测框的置信度
+    #   Get the confidence of the predicted box
     #------------------------------------------#
     box_confidence  = K.sigmoid(feats[..., 4:5])
     box_class_probs = K.sigmoid(feats[..., 5:])
     
     #---------------------------------------------------------------------#
-    #   在计算loss的时候返回grid, feats, box_xy, box_wh
-    #   在预测的时候返回box_xy, box_wh, box_confidence, box_class_probs
+    #   Return grid, feats, box_xy, box_wh when calculating loss
+    # Return box_xy, box_wh, box_confidence, box_class_probs when predicting
     #---------------------------------------------------------------------#
     if calc_loss == True:
         return grid, feats, box_xy, box_wh
     return box_xy, box_wh, box_confidence, box_class_probs
 
 #---------------------------------------------------#
-#   图片预测
+# Image Prediction
 #---------------------------------------------------#
 def DecodeBox(outputs,
             anchors,
             num_classes,
             input_shape,
             #-----------------------------------------------------------#
-            #   13x13的特征层对应的anchor是[116,90],[156,198],[373,326]
-            #   26x26的特征层对应的anchor是[30,61],[62,45],[59,119]
-            #   52x52的特征层对应的anchor是[10,13],[16,30],[33,23]
+            # The anchors corresponding to the 13x13 feature layer are [116,90], [156,198], [373,326]
+            # The anchors corresponding to the 26x26 feature layer are [30,61], [62,45], [59,119]
+            # The anchors corresponding to the 52x52 feature layer are [10,13], [16,30], [33,23]
             #-----------------------------------------------------------#
             anchor_mask     = [[6, 7, 8], [3, 4, 5], [0, 1, 2]],
             max_boxes       = 100,
@@ -118,16 +118,16 @@ def DecodeBox(outputs,
     box_class_probs = K.concatenate(box_class_probs, axis = 0)
     
     #------------------------------------------------------------------------------------------------------------#
-    #   在图像传入网络预测前会进行letterbox_image给图像周围添加灰条，因此生成的box_xy, box_wh是相对于有灰条的图像的
-    #   我们需要对其进行修改，去除灰条的部分。 将box_xy、和box_wh调节成y_min,y_max,xmin,xmax
-    #   如果没有使用letterbox_image也需要将归一化后的box_xy, box_wh调整成相对于原图大小的
+    # Before the image is passed to the network for prediction, letterbox_image will be used to add gray bars around the image, so the generated box_xy and box_wh are relative to the image with gray bars
+    # We need to modify it to remove the gray bars. Adjust box_xy and box_wh to y_min, y_max, xmin, xmax
+    # If letterbox_image is not used, the normalized box_xy and box_wh also need to be adjusted to the size relative to the original image
     #------------------------------------------------------------------------------------------------------------#
     boxes       = yolo_correct_boxes(box_xy, box_wh, input_shape, image_shape, letterbox_image)
 
     box_scores  = box_confidence * box_class_probs
 
     #-----------------------------------------------------------#
-    #   判断得分是否大于score_threshold
+    #  Determine whether the score is greater than score_threshold
     #-----------------------------------------------------------#
     mask             = box_scores >= confidence
     max_boxes_tensor = K.constant(max_boxes, dtype='int32')
@@ -136,20 +136,20 @@ def DecodeBox(outputs,
     classes_out = []
     for c in range(num_classes):
         #-----------------------------------------------------------#
-        #   取出所有box_scores >= score_threshold的框，和成绩
+        #  Take out all boxes with box_scores >= score_threshold and their scores
         #-----------------------------------------------------------#
         class_boxes      = tf.boolean_mask(boxes, mask[:, c])
         class_box_scores = tf.boolean_mask(box_scores[:, c], mask[:, c])
 
         #-----------------------------------------------------------#
-        #   非极大抑制
-        #   保留一定区域内得分最大的框
+        # Non-maximum suppression
+        # Keep the box with the largest score in a certain area
         #-----------------------------------------------------------#
         nms_index = tf.image.non_max_suppression(class_boxes, class_box_scores, max_boxes_tensor, iou_threshold=nms_iou)
 
         #-----------------------------------------------------------#
-        #   获取非极大抑制后的结果
-        #   下列三个分别是：框的位置，得分与种类
+        # Get the result after non-maximum suppression
+        # The following three are: box position, score and type
         #-----------------------------------------------------------#
         class_boxes         = K.gather(class_boxes, nms_index)
         class_box_scores    = K.gather(class_box_scores, nms_index)
@@ -185,18 +185,18 @@ class DecodeBoxNP():
             input_width     = np.shape(input)[3]
 
             #-----------------------------------------------#
-            #   输入为640x640时
-            #   stride_h = stride_w = 32、16、8
+            # When the input is 640x640
+            # stride_h = stride_w = 32, 16, 8
             #-----------------------------------------------#
             stride_h = self.input_shape[0] / input_height
             stride_w = self.input_shape[1] / input_width
             #-------------------------------------------------#
-            #   此时获得的scaled_anchors大小是相对于特征层的
+            # The scaled_anchors size obtained at this time is relative to the feature layer
             #-------------------------------------------------#
             scaled_anchors = [(anchor_width / stride_w, anchor_height / stride_h) for anchor_width, anchor_height in self.anchors[self.anchors_mask[i]]]
 
             #-----------------------------------------------#
-            #   输入的input一共有三个，他们的shape分别是
+            # There are three inputs, and their shapes are
             #   batch_size, 3, 20, 20, 85
             #   batch_size, 3, 40, 40, 85
             #   batch_size, 3, 80, 80, 85
@@ -204,27 +204,27 @@ class DecodeBoxNP():
             prediction = np.transpose(np.reshape(input, (batch_size, len(self.anchors_mask[i]), self.bbox_attrs, input_height, input_width)), (0, 1, 3, 4, 2))
 
             #-----------------------------------------------#
-            #   先验框的中心位置的调整参数
+            # Adjustment parameters of the center position of the prior box
             #-----------------------------------------------#
             x = self.sigmoid(prediction[..., 0])  
             y = self.sigmoid(prediction[..., 1])
             #-----------------------------------------------#
-            #   先验框的宽高调整参数
+            # Width and height adjustment parameters of the prior frame
             #-----------------------------------------------#
             w = self.sigmoid(prediction[..., 2]) 
             h = self.sigmoid(prediction[..., 3]) 
             #-----------------------------------------------#
-            #   获得置信度，是否有物体
+            # Get confidence, whether there is an object
             #-----------------------------------------------#
             conf        = self.sigmoid(prediction[..., 4])
             #-----------------------------------------------#
-            #   种类置信度
+            # Category confidence
             #-----------------------------------------------#
             pred_cls    = self.sigmoid(prediction[..., 5:])
 
             #----------------------------------------------------------#
-            #   生成网格，先验框中心，网格左上角 
-            #   batch_size,3,20,20
+            # Generate grid, center of prior box, upper left corner of grid
+            # batch_size,3,20,20
             #----------------------------------------------------------#
             grid_x = np.repeat(np.expand_dims(np.repeat(np.expand_dims(np.linspace(0, input_width - 1, input_width), 0), input_height, axis=0), 0), batch_size * len(self.anchors_mask[i]), axis=0)
             grid_x = np.reshape(grid_x, np.shape(x))
@@ -232,21 +232,21 @@ class DecodeBoxNP():
             grid_y = np.reshape(grid_y, np.shape(y))
     
             #----------------------------------------------------------#
-            #   按照网格格式生成先验框的宽高
-            #   batch_size,3,20,20
+            # Generate the width and height of the prior box in grid format
+            # batch_size,3,20,20
             #----------------------------------------------------------#
             anchor_w = np.repeat(np.expand_dims(np.repeat(np.expand_dims(np.array(scaled_anchors)[:, 0], 0), batch_size, axis=0), -1), input_height * input_width, axis=-1)
             anchor_h = np.repeat(np.expand_dims(np.repeat(np.expand_dims(np.array(scaled_anchors)[:, 1], 0), batch_size, axis=0), -1), input_height * input_width, axis=-1)
             anchor_w = np.reshape(anchor_w, np.shape(w))
             anchor_h = np.reshape(anchor_h, np.shape(h))
             #----------------------------------------------------------#
-            #   利用预测结果对先验框进行调整
-            #   首先调整先验框的中心，从先验框中心向右下角偏移
-            #   再调整先验框的宽高。
-            #   x 0 ~ 1 => 0 ~ 2 => -0.5, 1.5 => 负责一定范围的目标的预测
-            #   y 0 ~ 1 => 0 ~ 2 => -0.5, 1.5 => 负责一定范围的目标的预测
-            #   w 0 ~ 1 => 0 ~ 2 => 0 ~ 4 => 先验框的宽高调节范围为0~4倍
-            #   h 0 ~ 1 => 0 ~ 2 => 0 ~ 4 => 先验框的宽高调节范围为0~4倍
+            # Use the prediction results to adjust the prior frame
+            # First adjust the center of the prior frame, offset from the center of the prior frame to the lower right corner
+            # Then adjust the width and height of the prior frame.
+            # x 0 ~ 1 => 0 ~ 2 => -0.5, 1.5 => Responsible for the prediction of a certain range of targets
+            # y 0 ~ 1 => 0 ~ 2 => -0.5, 1.5 => Responsible for the prediction of a certain range of targets
+            # w 0 ~ 1 => 0 ~ 2 => 0 ~ 4 => The width and height of the prior frame can be adjusted from 0 to 4 times
+            # h 0 ~ 1 => 0 ~ 2 => 0 ~ 4 => The width and height of the prior frame can be adjusted from 0 to 4 times
             #----------------------------------------------------------#
             pred_boxes          = np.zeros(np.shape(prediction[..., :4]))
             pred_boxes[..., 0]  = x * 2. - 0.5 + grid_x
@@ -255,7 +255,7 @@ class DecodeBoxNP():
             pred_boxes[..., 3]  = (h * 2) ** 2 * anchor_h
 
             #----------------------------------------------------------#
-            #   将输出结果归一化成小数的形式
+            #   Normalize the output into decimal form
             #----------------------------------------------------------#
             _scale = np.array([input_width, input_height, input_width, input_height])
             output = np.concatenate([np.reshape(pred_boxes, (batch_size, -1, 4)) / _scale,
@@ -265,7 +265,7 @@ class DecodeBoxNP():
     
     def bbox_iou(self, box1, box2, x1y1x2y2=True):
         """
-            计算IOU
+           Calculating IOU
         """
         if not x1y1x2y2:
             b1_x1, b1_x2 = box1[:, 0] - box1[:, 2] / 2, box1[:, 0] + box1[:, 2] / 2
@@ -293,7 +293,7 @@ class DecodeBoxNP():
 
     def yolo_correct_boxes(self, box_xy, box_wh, input_shape, image_shape, letterbox_image):
         #-----------------------------------------------------------------#
-        #   把y轴放前面是因为方便预测框和图像的宽高进行相乘
+        # The y-axis is placed in front because it is convenient to multiply the width and height of the prediction box and the image.
         #-----------------------------------------------------------------#
         box_yx = box_xy[..., ::-1]
         box_hw = box_wh[..., ::-1]
@@ -302,8 +302,8 @@ class DecodeBoxNP():
 
         if letterbox_image:
             #-----------------------------------------------------------------#
-            #   这里求出来的offset是图像有效区域相对于图像左上角的偏移情况
-            #   new_shape指的是宽高缩放情况
+            # The offset calculated here is the offset of the image's effective area relative to the upper left corner of the image
+            # new_shape refers to the width and height scaling
             #-----------------------------------------------------------------#
             new_shape = np.round(image_shape * np.min(input_shape/image_shape))
             offset  = (input_shape - new_shape)/2./input_shape
@@ -320,8 +320,8 @@ class DecodeBoxNP():
 
     def non_max_suppression(self, prediction, num_classes, input_shape, image_shape, letterbox_image, conf_thres=0.5, nms_thres=0.4):
         #----------------------------------------------------------#
-        #   将预测结果的格式转换成左上角右下角的格式。
-        #   prediction  [batch_size, num_anchors, 85]
+        # Convert the prediction result format to the upper left and lower right format.
+        # prediction [batch_size, num_anchors, 85]
         #----------------------------------------------------------#
         box_corner          = np.zeros_like(prediction)
         box_corner[:, :, 0] = prediction[:, :, 0] - prediction[:, :, 2] / 2
@@ -333,20 +333,20 @@ class DecodeBoxNP():
         output = [None for _ in range(len(prediction))]
         for i, image_pred in enumerate(prediction):
             #----------------------------------------------------------#
-            #   对种类预测部分取max。
-            #   class_conf  [num_anchors, 1]    种类置信度
-            #   class_pred  [num_anchors, 1]    种类
+            # Take the max value for the category prediction part.
+            # class_conf [num_anchors, 1] category confidence
+            # class_pred [num_anchors, 1] category
             #----------------------------------------------------------#
             class_conf = np.max(image_pred[:, 5:5 + num_classes], 1, keepdims=True)
             class_pred = np.expand_dims(np.argmax(image_pred[:, 5:5 + num_classes], 1), -1)
 
             #----------------------------------------------------------#
-            #   利用置信度进行第一轮筛选
+            #  Use confidence level for the first round of screening
             #----------------------------------------------------------#
             conf_mask = np.squeeze((image_pred[:, 4] * class_conf[:, 0] >= conf_thres))
 
             #----------------------------------------------------------#
-            #   根据置信度进行预测结果的筛选
+            # Filter prediction results based on confidence
             #----------------------------------------------------------#
             image_pred = image_pred[conf_mask]
             class_conf = class_conf[conf_mask]
@@ -354,35 +354,35 @@ class DecodeBoxNP():
             if not np.shape(image_pred)[0]:
                 continue
             #-------------------------------------------------------------------------#
-            #   detections  [num_anchors, 7]
-            #   7的内容为：x1, y1, x2, y2, obj_conf, class_conf, class_pred
+            # detections [num_anchors, 7]
+            # 7 contains: x1, y1, x2, y2, obj_conf, class_conf, class_pred
             #-------------------------------------------------------------------------#
             detections = np.concatenate((image_pred[:, :5], class_conf, class_pred), 1)
 
             #------------------------------------------#
-            #   获得预测结果中包含的所有种类
+            # Get all the categories included in the prediction results
             #------------------------------------------#
             unique_labels = np.unique(detections[:, -1])
 
             for c in unique_labels:
                 #------------------------------------------#
-                #   获得某一类得分筛选后全部的预测结果
+                # Get all the prediction results after filtering a certain type of score
                 #------------------------------------------#
                 detections_class = detections[detections[:, -1] == c]
 
-                # 按照存在物体的置信度排序
+                # Sort by confidence of the existence of objects
                 conf_sort_index     = np.argsort(detections_class[:, 4] * detections_class[:, 5])[::-1]
                 detections_class    = detections_class[conf_sort_index]
-                # 进行非极大抑制
+                # Perform non-maximum suppression
                 max_detections = []
                 while np.shape(detections_class)[0]:
-                    # 取出这一类置信度最高的，一步一步往下判断，判断重合程度是否大于nms_thres，如果是则去除掉
+                    # Take out the one with the highest confidence level, and judge step by step whether the overlap degree is greater than nms_thres. If so, remove it.
                     max_detections.append(detections_class[0:1])
                     if len(detections_class) == 1:
                         break
                     ious                = self.bbox_iou(max_detections[-1], detections_class[1:])
                     detections_class    = detections_class[1:][ious < nms_thres]
-                # 堆叠
+                # Stacking
                 max_detections = np.concatenate(max_detections, 0)
                 
                 # Add max detections to outputs
@@ -403,7 +403,7 @@ if __name__ == "__main__":
         s = 1 / (1 + np.exp(-x))
         return s
     #---------------------------------------------------#
-    #   将预测值的每个特征层调成真实值
+    # Adjust each feature layer of the predicted value to the true value
     #---------------------------------------------------#
     def get_anchors_and_decode(feats, anchors, num_classes):
         # feats     [batch_size, 20, 20, 3 * (5 + num_classes)]
@@ -412,45 +412,45 @@ if __name__ == "__main__":
         # 3
         num_anchors = len(anchors)
         #------------------------------------------#
-        #   grid_shape指的是特征层的高和宽
-        #   grid_shape [20, 20] 
+        # grid_shape refers to the height and width of the feature layer
+        # grid_shape [20, 20]
         #------------------------------------------#
         grid_shape = np.shape(feats)[1:3]
         #--------------------------------------------------------------------#
-        #   获得各个特征点的坐标信息。生成的shape为(20, 20, num_anchors, 2)
-        #   grid_x [20, 20, 3, 1]
-        #   grid_y [20, 20, 3, 1]
-        #   grid   [20, 20, 3, 2]
+        # Get the coordinate information of each feature point. The generated shape is (20, 20, num_anchors, 2)
+        # grid_x [20, 20, 3, 1]
+        # grid_y [20, 20, 3, 1]
+        # grid [20, 20, 3, 2]
         #--------------------------------------------------------------------#
         grid_x  = np.tile(np.reshape(np.arange(0, stop=grid_shape[1]), [1, -1, 1, 1]), [grid_shape[0], 1, num_anchors, 1])
         grid_y  = np.tile(np.reshape(np.arange(0, stop=grid_shape[0]), [-1, 1, 1, 1]), [1, grid_shape[1], num_anchors, 1])
         grid    = np.concatenate([grid_x, grid_y], -1)
         #---------------------------------------------------------------#
-        #   将先验框进行拓展，生成的shape为(20, 20, num_anchors, 2)
-        #   [1, 1, 3, 2]
-        #   [20, 20, 3, 2]
+        # Expand the prior box and generate a shape of (20, 20, num_anchors, 2)
+        # [1, 1, 3, 2]
+        # [20, 20, 3, 2]
         #---------------------------------------------------------------#
         anchors_tensor = np.reshape(anchors, [1, 1, num_anchors, 2])
         anchors_tensor = np.tile(anchors_tensor, [grid_shape[0], grid_shape[1], 1, 1]) 
 
         #---------------------------------------------------#
-        #   将预测结果调整成(batch_size, 20, 20, 3, 85)
-        #   85可拆分成4 + 1 + 80
-        #   4代表的是中心宽高的调整参数
-        #   1代表的是框的置信度
-        #   80代表的是种类的置信度
-        #   [batch_size, 20, 20, 3 * (5 + num_classes)]
-        #   [batch_size, 20, 20, 3, 5 + num_classes]
+        # Adjust the prediction result to (batch_size, 20, 20, 3, 85)
+        # 85 can be split into 4 + 1 + 80
+        # 4 represents the adjustment parameter of the center width and height
+        # 1 represents the confidence of the box
+        # 80 represents the confidence of the category
+        # [batch_size, 20, 20, 3 * (5 + num_classes)]
+        # [batch_size, 20, 20, 3, 5 + num_classes]
         #---------------------------------------------------#
         feats           = np.reshape(feats, [-1, grid_shape[0], grid_shape[1], num_anchors, num_classes + 5])
 
         #------------------------------------------#
-        #   对先验框进行解码，并进行归一化
+        # Decode the prior frame and normalize it
         #------------------------------------------#
         box_xy          = (sigmoid(feats[..., :2]) * 2 - 0.5 + grid)
         box_wh          = (sigmoid(feats[..., 2:4]) * 2) ** 2 * anchors_tensor
         #------------------------------------------#
-        #   获得预测框的置信度
+        # Get the confidence of the prediction box
         #------------------------------------------#
         box_confidence  = sigmoid(feats[..., 4:5])
         box_class_probs = sigmoid(feats[..., 5:])
