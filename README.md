@@ -13,7 +13,7 @@ It supports two control configurations:
 
 - DL-based semantic segmentation of Ultrasound images to identify targets (e.g., tumors), microrobots swarms, obstacles, and navigable space
 
- ![Demo of segmentation](demonstration results/Demo of bladder tumor segmentation.png)
+   ![Demo of segmentation](Demonstration results/Demo of bladder tumor segmentation.png)
 
 - Real-time object detection using YOLOv5 to continuously locate the microrobot swarm
 
@@ -21,7 +21,7 @@ It supports two control configurations:
 
 - Closed-loop visual servoing with dynamic pose correction
   
- ![Demo of Navigation](demonstration results/Demo of mirorobot swarm autonomous navigation to tumor regime.png)
+  ![Demo of Navigation](Demonstration results/Demo of microrobot swarm autonomous navigation to tumor regime.png)
 
 - Machine interaction for both coil and RMS—based control system via serial or TCP/IP communication
 ## Directory Structure and Key Components
