@@ -19,6 +19,40 @@ It supports two control configurations:
 - Closed-loop visual servoing with dynamic pose correction
 
 - Machine interaction for both coil and RMS—based control system via serial or TCP/IP communication
+## Directory Structure and Key Components
+
+### 1. Core Control Modules
+
+| File/Folder                  | Description                                                                                     |
+|------------------------------|-------------------------------------------------------------------------------------------------|
+| `Main_Coil_based_control.py` | Entry script for ex-vivo multimodal control (electromagnetic coil-driven microrobot swarms)     |
+| `Main_RMS_based_control.py`  | Entry script for in-vivo tumor navigation (Robotic Magnetic System control loop)                |
+| `Robotcient.py`              | Core hardware communication (serial/TCP-IP) for coils/RMS and servo control                    |
+| `testServoPtxt.py`           | Servo motor/actuator testing script                                                            |
+
+### 2. Deep Learning Models
+
+#### UNet-based Segmentation
+
+| File/Folder            | Description                                                                                     |
+|------------------------|-------------------------------------------------------------------------------------------------|
+| `Unet/unet.py`         | UNet architecture for medical image segmentation (tumors/obstacles)                            |
+| `Unet/train.py`        | Training script                                     |
+| `Unet/resnet50.py`     | Pre-trained ResNet50 backbone for UNet encoder                                                 |
+| `Unet/vgg16.py`        | Pre-trained VGG16 backbone for UNet encoder                                                    |
+| `Unet/unet_training.py`| Extended training logic (multi-GPU training, loss function optimization)                        |
+| `Unet_utils/`          | Utilities (data augmentation, metrics, visualization)                                           |
+
+#### YOLO-based Detection
+
+| File/Folder            | Description                                                                                     |
+|------------------------|-------------------------------------------------------------------------------------------------|
+| `YOLO/yolo.py`         | YOLOv5 implementation for real-time microrobot swarm detection                                  |
+| `YOLO/CSPdarknet.py`   | CSPDarknet backbone for YOLO                                                                    |
+| `YOLO/train.py`        | Training script                                               |
+| `YOLO/yolo_training.py`| Extended training logic (anchor box optimization, learning rate scheduling)                     |
+| `YOLO_utils/`          | Helper tools (NMS post-processing, dataset formatting)                                          |
+
 
 ## System Requirements
 
