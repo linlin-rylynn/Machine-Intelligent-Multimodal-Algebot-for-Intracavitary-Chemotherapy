@@ -21,7 +21,7 @@ It supports two control configurations:
 
 - Closed-loop visual servoing with dynamic pose correction
   
-  ![Demo of Navigation](Demonstration%20results/Demo%20of%20microrobot%20swarm%20autonomous%20navigation%20to%20tumor regime.png)
+  ![Demo of Navigation](Demonstration%20results/Demo%20of%20microrobot%20swarm%20autonomous%20navigation%20to%20tumor%20regime.png)
 
 - Machine interaction for both coil and RMS—based control system via serial or TCP/IP communication
 ## Directory Structure and Key Components
