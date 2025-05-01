@@ -6,7 +6,7 @@ This project implements a deep learning (DL)-based intelligent navigation framew
   ### Demonstration of Navigation
    ![Demo of Navigation](Demonstration%20results/Demo%20of%20microrobot%20swarm%20autonomous%20navigation%20to%20tumor%20regime.png)
 
-It supports two control configurations:
+This project supports two control configurations:
 
 - Coil-based control – applied to micro-scale ex-vivo multimodal control demonstrations
 
