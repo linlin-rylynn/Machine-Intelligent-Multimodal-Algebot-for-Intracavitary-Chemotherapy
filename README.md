@@ -1,4 +1,4 @@
-# Machine-intelligent-Multimodal-Algebot-for-Intracavitary-Chemotherapy
+# Machine-Intelligent-Multimodal-Algebot-for-Intracavitary-Chemotherapy
 
 This project implements a deep learning (DL)-based intelligent navigation framework designed for autonomous microrobot control under real-time Ultrasound imaging guidance. The system integrates advanced image segmentation, object detection, motion planning, and robotic actuation into a closed-loop control pipeline capable of tracking and guiding microrobot swarms toward specific targets (e.g., tumors).                                    
   ### Demonstration of segmentation
