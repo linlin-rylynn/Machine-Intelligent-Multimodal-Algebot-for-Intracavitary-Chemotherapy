@@ -81,6 +81,15 @@ This project supports two control configurations:
   - openpyxl: 3.1.3   
   - mss: 6.1.0
 
+## Reference
+[[1] Path Aggregation Network for Instance Segmentation](https://arxiv.org/abs/1803.01534)
+
+[[2] YOLOv4: Optimal Speed and Accuracy of Object Detection](https://arxiv.org/abs/2004.10934)
+
+[[3] YOLOv3: An Incremental Improvement](https://arxiv.org/abs/1804.02767)
+
+[[4] Aggregated Residual Transformations for Deep Neural Networks](https://arxiv.org/abs/1611.05431)
+
 ## Acknowledgment
   tf_unet    [https://github.com/jakeret/tf_unet](https://github.com/jakeret/tf_unet).
 
