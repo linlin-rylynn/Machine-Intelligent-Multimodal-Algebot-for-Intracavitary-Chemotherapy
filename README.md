@@ -15,7 +15,7 @@ This project supports two control configurations:
 
 ## Key Features
 
-- DL-based semantic segmentation of Ultrasound images to identify targets (e.g., tumor regime), microrobots (e.g., DMCG) swarms , obstacles (e.g., Non-tumor regime), and navigable space (e.g., bladder lumen), etc.
+- DL-based semantic segmentation of Ultrasound images to identify targets (e.g., tumor region), microrobots (e.g., DMCG) swarms , obstacles (e.g., Non-tumor region), and navigable space (e.g., bladder lumen), etc.
 
 - Real-time object detection using YOLOv5 to continuously locate the microrobot swarm
 
