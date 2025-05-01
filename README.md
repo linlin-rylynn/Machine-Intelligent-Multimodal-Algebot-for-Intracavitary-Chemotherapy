@@ -1,6 +1,10 @@
 # Machine-intelligent-Multimodal-Algebot-for-Intracavitary-Chemotherapy
 
-This project implements a deep learning (DL)-based intelligent navigation framework designed for autonomous microrobot control under real-time Ultrasound imaging guidance. The system integrates advanced image segmentation, object detection, motion planning, and robot actuation into a closed-loop control pipeline capable of tracking and guiding microrobot swarms toward specific targets (e.g., tumors).                                    |
+This project implements a deep learning (DL)-based intelligent navigation framework designed for autonomous microrobot control under real-time Ultrasound imaging guidance. The system integrates advanced image segmentation, object detection, motion planning, and robot actuation into a closed-loop control pipeline capable of tracking and guiding microrobot swarms toward specific targets (e.g., tumors).                                    
+  ### Demonstration of segmentation
+   ![Demo of segmentation](Demonstration%20results/Demo%20of%20bladder%20tumor%20segmentation.png)
+  ### Demonstration of Navigation
+   ![Demo of Navigation](Demonstration%20results/Demo%20of%20microrobot%20swarm%20autonomous%20navigation%20to%20tumor%20regime.png)
 
 It supports two control configurations:
 
@@ -13,16 +17,12 @@ It supports two control configurations:
 
 - DL-based semantic segmentation of Ultrasound images to identify targets (e.g., tumor regime), microrobots (e.g., DMCG) swarms , obstacles (e.g., Non-tumor regime), and navigable space (e.g., bladder lumen), etc.
 
-   ![Demo of segmentation](Demonstration%20results/Demo%20of%20bladder%20tumor%20segmentation.png)
-
 - Real-time object detection using YOLOv5 to continuously locate the microrobot swarm
 
 - Autonomous navigation via BFS-based path planning and dynamic re-routing
 
 - Closed-loop visual servoing with dynamic pose correction
   
-  ![Demo of Navigation](Demonstration%20results/Demo%20of%20microrobot%20swarm%20autonomous%20navigation%20to%20tumor%20regime.png)
-
 - Machine interaction for both coil and RMS—based control system via serial or TCP/IP communication
 ## Directory Structure and Key Components
 
