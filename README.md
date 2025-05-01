@@ -3,7 +3,7 @@
 This project implements a deep learning (DL)-based intelligent navigation framework designed for autonomous microrobot control under real-time Ultrasound imaging guidance. The system integrates advanced image segmentation, object detection, motion planning, and robotic actuation into a closed-loop control pipeline capable of tracking and guiding microrobot swarms toward specific targets (e.g., tumors).                                    
   ### Demonstration of segmentation
    ![Demo of segmentation](Demo/Demo%20of%20bladder%20tumor%20segmentation.png)
-  ### Demonstration of nnnavigation
+  ### Demonstration of navigation
    ![Demo of Navigation](Demo/Demo%20of%20autonomous%20navigation%20in%20vivo.png)
 
 This project supports two control configurations:
