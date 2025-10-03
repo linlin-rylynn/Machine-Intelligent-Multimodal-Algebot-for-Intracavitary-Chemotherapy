@@ -117,7 +117,7 @@ Communication: IP/Port configuration can be modified in Robotcient.py
 
 To test servo communication with the RMS hardware:
 
-python testServoPtxt.py
+```python testServoPtxt.py```
 
 ## 5.2 Running Deep Learning Models
 ### a) UNet Segmentation
