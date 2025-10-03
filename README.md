@@ -91,7 +91,9 @@ This project implements a deep learning (DL)-based intelligent navigation framew
 ## 5.1 Running the Control System
 ### a) Coil-based Control
 
+```
 python Main_Coil_based_control.py
+```
 
 Input: Real-time Bright field or Ultrasound image stream
 
