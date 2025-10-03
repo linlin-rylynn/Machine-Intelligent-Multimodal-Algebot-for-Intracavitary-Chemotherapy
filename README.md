@@ -81,6 +81,9 @@ This project supports two control configurations:
   - openpyxl: 3.1.3   
   - mss: 6.1.0
 
+## License
+ - This project is covered under the Apache 2.0 License.
+
 ## Reference
 [[1] Path Aggregation Network for Instance Segmentation](https://arxiv.org/abs/1803.01534)
 
