@@ -32,8 +32,8 @@ This project supports two control configurations:
 |------------------------------|-------------------------------------------------------------------------------------------------|
 | `Main_Coil_based_control.py` | Entry script for ex-vivo multimodal control (electromagnetic coil-driven microrobot swarms)     |
 | `Main_RMS_based_control.py`  | Entry script for in-vivo tumor navigation (Robotic Magnetic System control loop)                |
-| `Robotcient.py`              | Core hardware communication (serial/TCP-IP) for coils/RMS and servo control                    |
-| `testServoPtxt.py`           | Servo motor/actuator testing script                                                            |
+| `Robotcient.py`              | Core hardware communication (serial/TCP-IP) for RMS and servo control                    |
+| `testServoPtxt.py`           | RMS testing script                                                            |
 
 ### 2. Deep Learning Models
 
