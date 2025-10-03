@@ -6,7 +6,7 @@ This project implements a deep learning (DL)-based intelligent navigation framew
 
 - Robotic magnet system (RMS)-based control – applied to macro-scale in-vivo tumor navigation
 
-## 1.1 Key Features
+### 1.1 Key Features
 
 - DL-based semantic segmentation of Ultrasound images to identify targets (e.g., tumor region), microrobots (e.g., DMCG) swarms , obstacles (e.g., Non-tumor region), and navigable space (e.g., bladder lumen), etc.
 
@@ -18,7 +18,7 @@ This project implements a deep learning (DL)-based intelligent navigation framew
   
 - Machine interaction for both coil and RMS—based control system via serial or TCP/IP communication
 
-## 1.2 Directory Structure and Key Components
+### 1.2 Directory Structure and Key Components
 
 ### a. Core Control Modules
 
@@ -55,12 +55,12 @@ This project implements a deep learning (DL)-based intelligent navigation framew
 
 # 2. System Requirements
 
-  ## 2.1 Core Framework 
+### 2.1 Core Framework 
   - Python: 3.7+ 
   - TensorFlow: 2.4.0 
   - OpenCV: 4.2.0+ 
   - ONNX Runtime: 1.14.1 
-  ## 2.2 Deep Learning Components
+### 2.2 Deep Learning Components
   - tensorflow-gpu: 2.4.0
   - cuda：10.1
   - h5py: 2.10.0
@@ -68,11 +68,11 @@ This project implements a deep learning (DL)-based intelligent navigation framew
   - tf2onnx: 1.16.1
   - CUDA: 10.1
   - cuDNN: 7.6.5
-  ## 2.3 Image Processing Stack
+### 2.3 Image Processing Stack
   - opencv-python: 4.2.0.34	
   - Pillow: 8.2.0
   - numpy: 1.21.6
-  ## 2.4 Control System Dependencies
+### 2.4 Control System Dependencies
   - pygame: 2.6.1     
   - pyserial: 3.5      
   - openpyxl: 3.1.3   
@@ -136,7 +136,7 @@ python Main_RMS_based_control.py
    ![Demo of Navigation](Demo/Demo%20of%20autonomous%20navigation%20in%20vivo.png)
 
 # 5. Instructions for use
-## 5.1 Running the Control System
+### 5.1 Running the Control System
 Once training is completed and the trained weights are placed into the corresponding `./weights/` folder (replacing the provided pretrained weights), the full system can be executed directly. The main scripts automatically call **YOLO** and **UNet**, so there is no need to run them separately unless for testing.
 ### a) Coil-based Control
 
@@ -168,7 +168,7 @@ To test servo communication with the RMS hardware:
 python testServoPtxt.py
 ```
 
-## 5.2 Running Deep Learning Models
+### 5.2 Running Deep Learning Models
 Although the main scripts already integrate segmentation (UNet) and detection (YOLO), you may run or retrain them independently if needed.
 ### a) UNet Segmentation
 
