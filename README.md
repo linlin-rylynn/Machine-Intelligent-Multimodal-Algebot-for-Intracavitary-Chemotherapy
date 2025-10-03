@@ -88,6 +88,61 @@ This project implements a deep learning (DL)-based intelligent navigation framew
    ![Demo of Navigation](Demo/Demo%20of%20autonomous%20navigation%20in%20vivo.png)
 
 # 5. Instructions for use
+## 5.1 Running the Control System
+a) Coil-based Control
+
+python Main_Coil_based_control.py
+
+Input: Real-time Bright field or Ultrasound image stream
+
+Output: Closed-loop navigation control signals sent to the electromagnetic coil driver
+
+Communication: Serial port (adjust COM port in script)
+
+b) RMS-based Control
+
+python Main_RMS_based_control.py
+
+Input: Real-time Ultrasound image stream
+
+Output: RMS actuation commands via TCP/IP
+
+Communication: IP/Port configuration can be modified in Robotcient.py
+
+c) RMS Hardware Test
+
+To test servo communication with the RMS hardware:
+
+python testServoPtxt.py
+
+## 5.2 Running Deep Learning Models
+a) UNet Segmentation
+
+cd Unet
+python unet.py --weights path_to_pretrained_model.h5 --input path_to_image_or_folder
+
+To train a new UNet model:
+
+python train.py --dataset ./dataset/ --epochs 100 --batch_size 16
+
+b) YOLOv5 Detection
+
+cd YOLO
+python yolo.py --weights path_to_trained_model.pt --source path_to_video_or_camera
+
+To train YOLOv5 on a new dataset:
+
+python train.py --data ./dataset/data.yaml --cfg yolov5s.yaml --weights '' --batch-size 16 --epochs 100
+
+## 5.3 Notes
+
+Ensure that the required dependencies listed in System Requirements are installed.
+
+For GPU acceleration, confirm CUDA and cuDNN versions are correctly configured.
+
+Example datasets and pre-trained weights should be placed in ./weights/ and ./dataset/ folders, respectively.
+
+Communication settings (serial port, IP, baud rate) may need to be modified in Robotcient.py before running experiments.
 
 # 6. License
  - This project is covered under the Apache 2.0 License.
