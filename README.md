@@ -113,8 +113,6 @@ Output: RMS actuation commands via TCP/IP
 
 Communication: IP/Port configuration can be modified in Robotcient.py
 
-### c) RMS Hardware Test
-
 To test servo communication with the RMS hardware:
 
 ```
