@@ -103,7 +103,9 @@ Communication: Serial port (adjust COM port in script)
 
 ### b) RMS-based Control
 
+```
 python Main_RMS_based_control.py
+```
 
 Input: Real-time Ultrasound image stream
 
@@ -120,21 +122,29 @@ python testServoPtxt.py
 ## 5.2 Running Deep Learning Models
 ### a) UNet Segmentation
 
+```
 cd Unet
 python unet.py --weights path_to_pretrained_model.h5 --input path_to_image_or_folder
+```
 
 To train a new UNet model:
 
+```
 python train.py --dataset ./dataset/ --epochs 100 --batch_size 16
+```
 
 ### b) YOLOv5 Detection
 
+```
 cd YOLO
 python yolo.py --weights path_to_trained_model.pt --source path_to_video_or_camera
+```
 
 To train YOLOv5 on a new dataset:
 
+```
 python train.py --data ./dataset/data.yaml --cfg yolov5s.yaml --weights '' --batch-size 16 --epochs 100
+```
 
 ## 5.3 Notes
 
