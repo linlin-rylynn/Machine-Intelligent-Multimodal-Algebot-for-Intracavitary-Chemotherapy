@@ -1,19 +1,12 @@
 # Machine-Intelligent-Multimodal-Algebot-for-Intracavitary-Chemotherapy
-
-This project implements a deep learning (DL)-based intelligent navigation framework designed for autonomous microrobot control under real-time Ultrasound imaging guidance. The system integrates advanced image segmentation, object detection, motion planning, and robotic actuation into a closed-loop control pipeline capable of tracking and guiding microrobot swarms toward specific targets (e.g., tumors).                                    
-  ### Demonstration of segmentation
-   ![Demo of segmentation](Demo/Demo%20of%20bladder%20tumor%20segmentation.png)
-  ### Demonstration of navigation
-   ![Demo of Navigation](Demo/Demo%20of%20autonomous%20navigation%20in%20vivo.png)
-
-This project supports two control configurations:
+## 1. Overview
+This project implements a deep learning (DL)-based intelligent navigation framework designed for autonomous microrobot control under real-time Ultrasound imaging guidance. The system integrates advanced image segmentation, object detection, motion planning, and robotic actuation into a closed-loop control pipeline capable of tracking and guiding microrobot swarms toward specific targets (e.g., tumors). This project supports two control configurations:
 
 - Coil-based control – applied to micro-scale ex-vivo multimodal control demonstrations
 
 - Robotic magnet system (RMS)-based control – applied to macro-scale in-vivo tumor navigation
 
-
-## Key Features
+### Key Features
 
 - DL-based semantic segmentation of Ultrasound images to identify targets (e.g., tumor region), microrobots (e.g., DMCG) swarms , obstacles (e.g., Non-tumor region), and navigable space (e.g., bladder lumen), etc.
 
@@ -24,9 +17,10 @@ This project supports two control configurations:
 - Closed-loop visual servoing with dynamic pose correction
   
 - Machine interaction for both coil and RMS—based control system via serial or TCP/IP communication
-## Directory Structure and Key Components
 
-### 1. Core Control Modules
+### Directory Structure and Key Components
+
+#### a. Core Control Modules
 
 | File/Folder                  | Description                                                                                     |
 |------------------------------|-------------------------------------------------------------------------------------------------|
@@ -35,7 +29,7 @@ This project supports two control configurations:
 | `Robotcient.py`              | Core hardware communication (serial/TCP-IP) for servo control of RMS                            |
 | `testServoPtxt.py`           | RMS testing script                                                                              |
 
-### 2. Deep Learning Models
+#### b. Deep Learning Models
 
 #### UNet-based Segmentation
 
@@ -59,7 +53,7 @@ This project supports two control configurations:
 | `YOLO_utils/`          | Helper tools (NMS post-processing, dataset formatting)                                          |
 
 
-## System Requirements
+## 2. System Requirements
 
   ### Core Framework 
   - Python: 3.7+ 
@@ -67,10 +61,13 @@ This project supports two control configurations:
   - OpenCV: 4.2.0+ 
   - ONNX Runtime: 1.14.1 
   ### Deep Learning Components
-  - tensorflow-gpu: 2.4.0	
+  - tensorflow-gpu: 2.4.0
+  - cuda：10.1
   - h5py: 2.10.0
   - onnx: 1.14.1
   - tf2onnx: 1.16.1
+  - CUDA: 10.1
+  - cuDNN: 7.6.5
   ### Image Processing Stack
   - opencv-python: 4.2.0.34	
   - Pillow: 8.2.0
@@ -80,6 +77,17 @@ This project supports two control configurations:
   - pyserial: 3.5      
   - openpyxl: 3.1.3   
   - mss: 6.1.0
+
+## 3. Installation guide
+    'git clone https://github.com/linlin-rylynn/Machine-Intelligent-Multimodal-Algebot-for-Intracavitary-Chemotherapy'
+
+## 4. Demo
+  ### Demonstration of segmentation
+   ![Demo of segmentation](Demo/Demo%20of%20bladder%20tumor%20segmentation.png)
+  ### Demonstration of navigation
+   ![Demo of Navigation](Demo/Demo%20of%20autonomous%20navigation%20in%20vivo.png)
+
+## 5. Instructions for use
 
 ## License
  - This project is covered under the Apache 2.0 License.
