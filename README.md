@@ -79,7 +79,7 @@ This project implements a deep learning (DL)-based intelligent navigation framew
   - mss: 6.1.0
 
 ## 3. Installation guide
-    'git clone https://github.com/linlin-rylynn/Machine-Intelligent-Multimodal-Algebot-for-Intracavitary-Chemotherapy'
+    git clone https://github.com/linlin-rylynn/Machine-Intelligent-Multimodal-Algebot-for-Intracavitary-Chemotherapy
 
 ## 4. Demo
   ### Demonstration of segmentation
