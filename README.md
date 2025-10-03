@@ -89,6 +89,7 @@ This project implements a deep learning (DL)-based intelligent navigation framew
 
 # 5. Instructions for use
 ## 5.1 Running the Control System
+Once training is completed and the trained weights are placed into the corresponding `./weights/` folder (replacing the provided pretrained weights), the full system can be executed directly. The main scripts automatically call **YOLO** and **UNet**, so there is no need to run them separately unless for testing.
 ### a) Coil-based Control
 
 ```
@@ -120,30 +121,31 @@ python testServoPtxt.py
 ```
 
 ## 5.2 Running Deep Learning Models
+Although the main scripts already integrate segmentation (UNet) and detection (YOLO), you may run or retrain them independently if needed.
 ### a) UNet Segmentation
 
 ```
 cd Unet
-python unet.py --weights path_to_pretrained_model.h5 --input path_to_image_or_folder
+python unet.py
 ```
 
 To train a new UNet model:
 
 ```
-python train.py --dataset ./dataset/ --epochs 100 --batch_size 16
+python train.py
 ```
 
 ### b) YOLOv5 Detection
 
 ```
 cd YOLO
-python yolo.py --weights path_to_trained_model.pt --source path_to_video_or_camera
+python yolo.py
 ```
 
 To train YOLOv5 on a new dataset:
 
 ```
-python train.py --data ./dataset/data.yaml --cfg yolov5s.yaml --weights '' --batch-size 16 --epochs 100
+python train.py
 ```
 
 ## 5.3 Notes
