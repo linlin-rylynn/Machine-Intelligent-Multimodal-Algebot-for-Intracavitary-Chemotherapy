@@ -91,6 +91,7 @@ This project implements a deep learning (DL)-based intelligent navigation framew
 ## 5.1 Running the Control System
 a) Coil-based Control
 
+```bash
 python Main_Coil_based_control.py
 
 Input: Real-time Bright field or Ultrasound image stream
@@ -101,6 +102,7 @@ Communication: Serial port (adjust COM port in script)
 
 b) RMS-based Control
 
+```bash
 python Main_RMS_based_control.py
 
 Input: Real-time Ultrasound image stream
