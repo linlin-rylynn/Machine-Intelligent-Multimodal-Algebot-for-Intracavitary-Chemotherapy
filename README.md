@@ -78,8 +78,56 @@ This project implements a deep learning (DL)-based intelligent navigation framew
   - openpyxl: 3.1.3   
   - mss: 6.1.0
 
-# 3. Installation guide
-    git clone https://github.com/linlin-rylynn/Machine-Intelligent-Multimodal-Algebot-for-Intracavitary-Chemotherapy
+# 3. Installation Guide
+
+### Step 1. Clone the Repository
+```bash
+git clone https://github.com/linlin-rylynn/Machine-Intelligent-Multimodal-Algebot-for-Intracavitary-Chemotherapy
+cd Machine-Intelligent-Multimodal-Algebot-for-Intracavitary-Chemotherapy
+````
+### Step 2. Create a Virtual Environment (Recommended)
+```bash
+python -m venv venv
+source venv/bin/activate   # Linux / macOS
+venv\Scripts\activate      # Windows
+```### Step 3. Install Dependencies
+If a `requirements.txt` file is available:
+```bash
+pip install -r requirements.txt
+```
+Otherwise, install manually:
+```bash
+pip install tensorflow-gpu==2.4.0 opencv-python==4.2.0.34 onnxruntime==1.14.1 \
+            h5py==2.10.0 tf2onnx==1.16.1 pillow==8.2.0 numpy==1.21.6 \
+            pygame==2.6.1 pyserial==3.5 openpyxl==3.1.3 mss==6.1.0
+```
+### Step 4. Configure GPU Support (Optional but Recommended)
+* **CUDA**: 10.1
+* **cuDNN**: 7.6.5
+Verify GPU availability in TensorFlow:
+```bash
+python -c "import tensorflow as tf; print(tf.test.is_gpu_available())"
+```
+### Step 5. Prepare Datasets and Pretrained Weights
+* Place **example datasets** under:
+  ```
+  ./dataset/
+  ```
+* Place **pretrained weights** under:
+  ```
+  ./weights/
+  ```
+### Step 6. Run Demo
+
+To verify the setup, run either of the following:
+
+```bash
+python Main_Coil_based_control.py
+```
+or
+```bash
+python Main_RMS_based_control.py
+```
 
 # 4. Demo
   ### Demonstration of segmentation
