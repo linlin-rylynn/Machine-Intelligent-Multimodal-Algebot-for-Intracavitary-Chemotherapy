@@ -91,7 +91,6 @@ This project implements a deep learning (DL)-based intelligent navigation framew
 ## 5.1 Running the Control System
 a) Coil-based Control
 
-```bash
 python Main_Coil_based_control.py
 
 Input: Real-time Bright field or Ultrasound image stream
@@ -102,7 +101,6 @@ Communication: Serial port (adjust COM port in script)
 
 b) RMS-based Control
 
-```bash
 python Main_RMS_based_control.py
 
 Input: Real-time Ultrasound image stream
@@ -115,30 +113,25 @@ c) RMS Hardware Test
 
 To test servo communication with the RMS hardware:
 
-```bash
 python testServoPtxt.py
 
 ## 5.2 Running Deep Learning Models
 a) UNet Segmentation
 
-```bash
 cd Unet
 python unet.py --weights path_to_pretrained_model.h5 --input path_to_image_or_folder
 
 To train a new UNet model:
 
-```bash
 python train.py --dataset ./dataset/ --epochs 100 --batch_size 16
 
 b) YOLOv5 Detection
 
-```bash
 cd YOLO
 python yolo.py --weights path_to_trained_model.pt --source path_to_video_or_camera
 
 To train YOLOv5 on a new dataset:
 
-```bash
 python train.py --data ./dataset/data.yaml --cfg yolov5s.yaml --weights '' --batch-size 16 --epochs 100
 
 ## 5.3 Notes
