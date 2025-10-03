@@ -1,12 +1,12 @@
-# Machine-Intelligent-Multimodal-Algebot-for-Intracavitary-Chemotherapy
-## 1. Overview
+
+# 1. Overview
 This project implements a deep learning (DL)-based intelligent navigation framework designed for autonomous microrobot control under real-time Ultrasound imaging guidance. The system integrates advanced image segmentation, object detection, motion planning, and robotic actuation into a closed-loop control pipeline capable of tracking and guiding microrobot swarms toward specific targets (e.g., tumors). This project supports two control configurations:
 
 - Coil-based control – applied to micro-scale ex-vivo multimodal control demonstrations
 
 - Robotic magnet system (RMS)-based control – applied to macro-scale in-vivo tumor navigation
 
-### Key Features
+## Key Features
 
 - DL-based semantic segmentation of Ultrasound images to identify targets (e.g., tumor region), microrobots (e.g., DMCG) swarms , obstacles (e.g., Non-tumor region), and navigable space (e.g., bladder lumen), etc.
 
@@ -18,9 +18,9 @@ This project implements a deep learning (DL)-based intelligent navigation framew
   
 - Machine interaction for both coil and RMS—based control system via serial or TCP/IP communication
 
-### Directory Structure and Key Components
+## Directory Structure and Key Components
 
-#### a. Core Control Modules
+### a. Core Control Modules
 
 | File/Folder                  | Description                                                                                     |
 |------------------------------|-------------------------------------------------------------------------------------------------|
@@ -29,9 +29,9 @@ This project implements a deep learning (DL)-based intelligent navigation framew
 | `Robotcient.py`              | Core hardware communication (serial/TCP-IP) for servo control of RMS                            |
 | `testServoPtxt.py`           | RMS testing script                                                                              |
 
-#### b. Deep Learning Models
+### b. Deep Learning Models
 
-#### UNet-based Segmentation
+### UNet-based Segmentation
 
 | File/Folder            | Description                                                                                     |
 |------------------------|-------------------------------------------------------------------------------------------------|
@@ -42,7 +42,7 @@ This project implements a deep learning (DL)-based intelligent navigation framew
 | `Unet/unet_training.py`| Extended training logic (multi-GPU training, loss function optimization)                        |
 | `Unet_utils/`          | Utilities (data augmentation, metrics, visualization)                                           |
 
-#### YOLO-based Detection
+### YOLO-based Detection
 
 | File/Folder            | Description                                                                                     |
 |------------------------|-------------------------------------------------------------------------------------------------|
@@ -53,14 +53,14 @@ This project implements a deep learning (DL)-based intelligent navigation framew
 | `YOLO_utils/`          | Helper tools (NMS post-processing, dataset formatting)                                          |
 
 
-## 2. System Requirements
+# 2. System Requirements
 
-  ### Core Framework 
+  ## Core Framework 
   - Python: 3.7+ 
   - TensorFlow: 2.4.0 
   - OpenCV: 4.2.0+ 
   - ONNX Runtime: 1.14.1 
-  ### Deep Learning Components
+  ## Deep Learning Components
   - tensorflow-gpu: 2.4.0
   - cuda：10.1
   - h5py: 2.10.0
@@ -68,31 +68,31 @@ This project implements a deep learning (DL)-based intelligent navigation framew
   - tf2onnx: 1.16.1
   - CUDA: 10.1
   - cuDNN: 7.6.5
-  ### Image Processing Stack
+  ## Image Processing Stack
   - opencv-python: 4.2.0.34	
   - Pillow: 8.2.0
   - numpy: 1.21.6
-  ### Control System Dependencies
+  ## Control System Dependencies
   - pygame: 2.6.1     
   - pyserial: 3.5      
   - openpyxl: 3.1.3   
   - mss: 6.1.0
 
-## 3. Installation guide
+# 3. Installation guide
     git clone https://github.com/linlin-rylynn/Machine-Intelligent-Multimodal-Algebot-for-Intracavitary-Chemotherapy
 
-## 4. Demo
+# 4. Demo
   ### Demonstration of segmentation
    ![Demo of segmentation](Demo/Demo%20of%20bladder%20tumor%20segmentation.png)
   ### Demonstration of navigation
    ![Demo of Navigation](Demo/Demo%20of%20autonomous%20navigation%20in%20vivo.png)
 
-## 5. Instructions for use
+# 5. Instructions for use
 
-## License
+# 6. License
  - This project is covered under the Apache 2.0 License.
 
-## Reference
+# 7. Reference
 [[1] Path Aggregation Network for Instance Segmentation](https://arxiv.org/abs/1803.01534)
 
 [[2] YOLOv4: Optimal Speed and Accuracy of Object Detection](https://arxiv.org/abs/2004.10934)
@@ -101,7 +101,7 @@ This project implements a deep learning (DL)-based intelligent navigation framew
 
 [[4] Aggregated Residual Transformations for Deep Neural Networks](https://arxiv.org/abs/1611.05431)
 
-## Acknowledgment
+## 8. Acknowledgment
   tf_unet    [https://github.com/jakeret/tf_unet](https://github.com/jakeret/tf_unet).
 
   Yolov5_tf   [https://github.com/jakeret/tf_unet](https://github.com/jakeret/tf_unet).
