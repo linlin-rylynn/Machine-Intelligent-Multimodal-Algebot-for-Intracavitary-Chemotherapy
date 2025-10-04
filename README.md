@@ -6,7 +6,7 @@ This project implements a deep learning (DL)-based intelligent navigation framew
 
 - Robotic magnet system (RMS)-based control – applied to macro-scale in-vivo tumor navigation
 
-### 1.1 Key Features
+### 1.1 Features
 
 - DL-based semantic segmentation of Ultrasound images to identify targets (e.g., tumor region), microrobots (e.g., DMCG) swarms , obstacles (e.g., Non-tumor region), and navigable space (e.g., bladder lumen), etc.
 
@@ -18,9 +18,9 @@ This project implements a deep learning (DL)-based intelligent navigation framew
   
 - Machine interaction for both coil and RMS—based control system via serial or TCP/IP communication
 
-### 1.2 Directory Structure and Key Components
+### 1.2 Directory Structure and Components
 
-### a. Core Control Modules
+### a. Control Modules
 
 | File/Folder                  | Description                                                                                     |
 |------------------------------|-------------------------------------------------------------------------------------------------|
@@ -90,7 +90,8 @@ cd Machine-Intelligent-Multimodal-Algebot-for-Intracavitary-Chemotherapy
 python -m venv venv
 source venv/bin/activate   # Linux / macOS
 venv\Scripts\activate      # Windows
-```### Step 3. Install Dependencies
+```
+### Step 3. Install Dependencies
 If a `requirements.txt` file is available:
 ```bash
 pip install -r requirements.txt
@@ -196,7 +197,7 @@ To train YOLOv5 on a new dataset:
 python train.py
 ```
 
-## 5.3 Notes
+### 5.3 Notes
 
 Ensure that the required dependencies listed in System Requirements are installed.
 
