@@ -77,6 +77,23 @@ This project implements a deep learning (DL)-based intelligent navigation framew
   - pyserial: 3.5      
   - openpyxl: 3.1.3   
   - mss: 6.1.0
+### 2.5 Hardware Requirements
+ #### Recommended Computer Configuration
+  - GPU: NVIDIA GeForce RTX 3080 or higher (for real-time DL inference)
+  - CPU: Intel Core i7-10700K or AMD Ryzen 7 5800X
+  - RAM: 32GB DDR4
+  - Storage: 1TB NVMe SSD
+ #### Coil-based Magnetic Control System
+  - Three-axis Helmholtz coils
+  - Maximum current: 5A per channel
+  - Magnetic field strength: 0-20 mT
+  - Control interface: RS-232 serial communication
+  - Power supply: 48V DC, 600W
+ #### Six-Axis Robotic Arm (E03, Hansrobot, China)
+  - Payload: 3kg
+  - Reach: 620mm
+  - Repeatability: ±0.03mm
+  - Integration: Python SDK provided
 
 # 3. Installation Guide
 
